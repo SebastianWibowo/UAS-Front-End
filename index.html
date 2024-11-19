@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="duniaRasaApp">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dunia Rasa</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <style>
+        .recipe-card {
+            margin: 15px 0;
+        }
+
+        .navbar-brand {
+            font-family: 'Georgia', serif;
+            font-weight: bold;
+            color: red;
+        }
+
+        .recipe-image {
+            max-height: 150px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+
+<body ng-controller="MainController">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">DUNIA RASA</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Tags</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Recipes</a></li>
+            </ul>
+            <button class="btn btn-danger ml-3">Cart</button>
+        </div>
+    </nav>
+
+    <!-- Header Image -->
+    <div class="jumbotron text-center"
+        style="background-image: url('https://source.unsplash.com/1200x400/?food'); background-size: cover; color: white;">
+        <h1>Dunia Rasa</h1>
+        <p>Jelajahi Dunia Kuliner, Satu Resep Sejuta Cerita</p>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <h4>Recipes</h4>
+                <ul class="list-group">
+                    <li class="list-group-item" ng-repeat="category in categories">
+                        {{category.name}} ({{category.count}})
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-md-4 recipe-card" ng-repeat="recipe in recipes">
+                        <div class="card">
+                            <img class="card-img-top recipe-image" ng-src="{{recipe.image}}" alt="{{recipe.title}}">
+                            <div class="card-body">
+                                <h5 class="card-title">{{recipe.title}}</h5>
+                                <p class="card-text">{{recipe.price}}k</p>
+                                <button class="btn btn-outline-danger btn-sm">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        angular.module('duniaRasaApp', [])
+            .controller('MainController', function ($scope) {
+                $scope.categories = [
+                    { name: 'Asia', count: 3 },
+                    { name: 'Eropa', count: 2 },
+                    { name: 'Daging', count: 3 },
+                    { name: 'Nasi', count: 1 }
+                ];
+
+                $scope.recipes = [
+                    { title: 'Nasi Goreng', price: 17, image: 'https://source.unsplash.com/400x300/?fried-rice' },
+                    { title: 'Rendang', price: 33, image: 'https://source.unsplash.com/400x300/?rendang' },
+                    { title: 'Spaghetti', price: 18, image: 'https://source.unsplash.com/400x300/?spaghetti' },
+                    { title: 'Ayam Mentega', price: 25, image: 'https://source.unsplash.com/400x300/?chicken' },
+                    { title: 'Steak (Medium Rare)', price: 43, image: 'https://source.unsplash.com/400x300/?steak' }
+                ];
+            });
+    </script>
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
