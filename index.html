@@ -10,19 +10,39 @@
     <!-- AngularJS -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
     <style>
-        .recipe-card {
-            margin: 15px 0;
+        body {
+            font-family: Arial, sans-serif;
         }
 
         .navbar-brand {
             font-family: 'Georgia', serif;
             font-weight: bold;
-            color: red;
+            color: #d9534f !important;
+        }
+
+        .jumbotron {
+            background-size: cover;
+            color: white;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .recipe-card {
+            margin-bottom: 20px;
         }
 
         .recipe-image {
             max-height: 150px;
             object-fit: cover;
+        }
+
+        .favorites-btn {
+            color: red;
+            cursor: pointer;
+        }
+
+        .favorites-btn:hover {
+            color: darkred;
         }
     </style>
 </head>
@@ -42,14 +62,15 @@
                 <li class="nav-item"><a class="nav-link" href="#">About</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Tags</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Recipes</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Favorites</a></li>
             </ul>
-            <button class="btn btn-danger ml-3">Cart</button>
+            <span class="ml-3 text-dark">User 1</span>
         </div>
     </nav>
 
-    <!-- Header Image -->
-    <div class="jumbotron text-center"
-        style="background-image: url('https://source.unsplash.com/1200x400/?food'); background-size: cover; color: white;">
+    <!-- Header -->
+    <div class="jumbotron"
+        style="background-image: url('https://source.unsplash.com/1200x400/?food'); background-size: cover;">
         <h1>Dunia Rasa</h1>
         <p>Jelajahi Dunia Kuliner, Satu Resep Sejuta Cerita</p>
     </div>
@@ -57,14 +78,17 @@
     <!-- Main Content -->
     <div class="container">
         <div class="row">
+            <!-- Sidebar -->
             <div class="col-md-3">
-                <h4>Recipes</h4>
+                <h5>Recipes</h5>
                 <ul class="list-group">
                     <li class="list-group-item" ng-repeat="category in categories">
                         {{category.name}} ({{category.count}})
                     </li>
                 </ul>
             </div>
+
+            <!-- Recipe Cards -->
             <div class="col-md-9">
                 <div class="row">
                     <div class="col-md-4 recipe-card" ng-repeat="recipe in recipes">
@@ -72,8 +96,10 @@
                             <img class="card-img-top recipe-image" ng-src="{{recipe.image}}" alt="{{recipe.title}}">
                             <div class="card-body">
                                 <h5 class="card-title">{{recipe.title}}</h5>
-                                <p class="card-text">{{recipe.price}}k</p>
-                                <button class="btn btn-outline-danger btn-sm">Add to Cart</button>
+                                <p class="card-text">
+                                    Prep: {{recipe.prep}} | Cook: {{recipe.cook}}
+                                </p>
+                                <i class="favorites-btn fa fa-star"></i>
                             </div>
                         </div>
                     </div>
@@ -82,7 +108,7 @@
         </div>
     </div>
 
-    <!-- Scripts -->
+    <!-- AngularJS -->
     <script>
         angular.module('duniaRasaApp', [])
             .controller('MainController', function ($scope) {
@@ -94,14 +120,15 @@
                 ];
 
                 $scope.recipes = [
-                    { title: 'Nasi Goreng', price: 17, image: 'https://source.unsplash.com/400x300/?fried-rice' },
-                    { title: 'Rendang', price: 33, image: 'https://source.unsplash.com/400x300/?rendang' },
-                    { title: 'Spaghetti', price: 18, image: 'https://source.unsplash.com/400x300/?spaghetti' },
-                    { title: 'Ayam Mentega', price: 25, image: 'https://source.unsplash.com/400x300/?chicken' },
-                    { title: 'Steak (Medium Rare)', price: 43, image: 'https://source.unsplash.com/400x300/?steak' }
+                    { title: 'Nasi Goreng', prep: '3min', cook: '5min', image: 'app\assets\recipes\nasi goreng.png' },
+                    { title: 'Rendang', prep: '15min', cook: '3hour', image: 'https://source.unsplash.com/400x300/?rendang' },
+                    { title: 'Spaghetti', prep: '10min', cook: '30min', image: 'https://source.unsplash.com/400x300/?spaghetti' },
+                    { title: 'Ayam Mentega', prep: '5min', cook: '14min', image: 'https://source.unsplash.com/400x300/?chicken' },
+                    { title: 'Steak (Medium Rare)', prep: '10min', cook: '45min', image: 'https://source.unsplash.com/400x300/?steak' }
                 ];
             });
     </script>
+
     <!-- Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
