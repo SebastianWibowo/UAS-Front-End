@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="registerApp">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Dunia Rasa</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .register-card {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            background-color: white;
+        }
+
+        .register-title {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .btn-register {
+            background-color: #d9534f;
+            color: white;
+        }
+
+        .btn-register:hover {
+            background-color: #c9302c;
+        }
+
+        .form-error {
+            color: red;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+
+<body ng-controller="RegisterController">
+
+    <div class="register-card">
+        <h3 class="register-title">Register to Dunia Rasa</h3>
+        <form name="registerForm" ng-submit="register()">
+            <!-- Username Field -->
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" class="form-control" ng-model="user.username" required>
+                <div class="form-error" ng-show="registerForm.username.$dirty && registerForm.username.$error.required">
+                    Username is required.
+                </div>
+            </div>
+            <!-- Password Field -->
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" class="form-control" ng-model="user.password"
+                    required>
+                <div class="form-error" ng-show="registerForm.password.$dirty && registerForm.password.$error.required">
+                    Password is required.
+                </div>
+            </div>
+            <!-- Register Button -->
+            <button type="submit" class="btn btn-register btn-block"
+                ng-disabled="registerForm.$invalid">Register</button>
+        </form>
+        <div class="text-center mt-3">
+            <small>Already have an account? <a href="login.html">Login here</a></small>
+        </div>
+    </div>
+
+    <script>
+        // AngularJS App
+        angular.module('registerApp', [])
+            .controller('RegisterController', function ($scope, $http, $window) {
+                $scope.user = {};
+
+                $scope.register = function () {
+                    if ($scope.user.username && $scope.user.password) {
+                        $http.post('http://localhost:3000/register', $scope.user)
+                            .then(function (response) {
+                                alert('Registration successful!');
+                                $window.location.href = 'login.html';
+                            })
+                            .catch(function (error) {
+                                alert('Registration failed: ' + error.data.message);
+                            });
+                    } else {
+                        alert('Please fill in all fields.');
+                    }
+                };
+            });
+    </script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
